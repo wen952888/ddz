@@ -1,0 +1,22 @@
+# Node modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# Build output directories
+frontend/dist/
+frontend/build/
+
+# Cloudflare Wrangler specific
+backend/.wrangler/
+backend/node_modules/ # 如果后端有自己的 package.json 并安装了依赖
+
+# IDE and OS specific
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
