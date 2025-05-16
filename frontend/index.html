@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网页斗地主</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>斗地主 - 牌面识别</h1>
+    </header>
+    <main>
+        <div id="game-area">
+            <div id="player-hand-area" class="card-area">
+                <h2>你的手牌</h2>
+                <div id="player-hand" class="hand">
+                    <!-- 手牌将由JS动态生成 -->
+                </div>
+            </div>
+
+            <div id="deck-area" class="card-area">
+                <h2>牌堆 (示例)</h2>
+                <div id="deck-display" class="hand">
+                    <!-- 牌堆示例将由JS动态生成 -->
+                </div>
+            </div>
+        </div>
+        <button id="deal-button">发一副牌 (示例)</button>
+        <button id="show-all-cards-button">显示所有牌型</button>
+    </main>
+    <footer>
+        <p>扑克牌图片稍后上传到 `frontend/assets/cards/`</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
