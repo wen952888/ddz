@@ -2,64 +2,167 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f8ff; /* 淡蓝色背景 */
+    background-color: #f0f0f0; /* 1. 全局背景改为浅灰色 */
     color: #333;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    overflow: hidden; /* 3. 防止牌桌过大时出现滚动条 */
 }
 
 header {
-    background-color: #007bff; /* 主题蓝 */
+    background-color: #007bff;
     color: white;
-    padding: 1em 0;
+    padding: 0.8em 0; /* 略微减小header高度 */
     text-align: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 10; /* 确保header在牌桌之上 */
+    position: relative; /* 为了z-index生效 */
 }
 
 main {
     flex-grow: 1;
-    padding: 10px;
-    max-width: 1000px; /* 调整游戏区域最大宽度 */
-    margin: 10px auto;
+    /* 3. 移除main的padding和max-width，让牌桌自己控制 */
     width: 100%;
+    height: calc(100vh - 4em - 2em); /* 3. 大致计算main的高度: 100vh - header高度 - footer高度 */
+    display: flex; /* 3. 用于牌桌居中 (如果牌桌不是100%宽高) */
+    justify-content: center; /* 3. */
+    align-items: center;    /* 3. */
     box-sizing: border-box;
+    position: relative; /* 为了内部绝对定位的子元素 */
 }
 
 #game-table {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
     background-color: #228B22; /* 绿色桌面 */
+    /* 3. 牌桌尝试接近全屏，但保留一些边距，或者完全全屏 */
+    width: 98vw; /* 或者 100vw */
+    height: calc(100% - 20px); /* 或者 100%，从main继承 */
+    /* max-width: 1200px; /* 可以设置一个最大宽度，防止在超宽屏上过于拉伸 */
+    /* max-height: 800px; /* 可以设置一个最大高度 */
+    margin: auto; /* 如果设置了max-width/height，则居中 */
     padding: 15px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    display: grid; /* 4. 使用 Grid 布局来实现倒三角 */
+    grid-template-rows: auto 1fr auto; /* 顶部玩家行，中间区域行（可扩展），底部玩家行 */
+    grid-template-columns: 1fr 2fr 1fr; /* 左侧，中间（底牌/信息），右侧 */
+    gap: 10px;
+    position: relative; /* 用于绝对定位玩家区域 */
+    overflow: hidden; /* 防止内部元素溢出牌桌 */
 }
 
+
+/* --- 4. 玩家区域定位 (倒三角) --- */
 .player-area {
-    background-color: rgba(255, 255, 255, 0.1); /* 半透明白色背景 */
+    background-color: rgba(0, 0, 0, 0.15); /* 深一点的半透明背景，增加对比度 */
     padding: 10px;
     border-radius: 8px;
-    /* border: 1px solid #ccc; */
     display: flex;
     flex-direction: column;
-    align-items: center; /* 子元素水平居中 */
+    align-items: center;
+    color: white;
+    box-sizing: border-box;
 }
 
-.self-area {
-    border: 2px solid #007bff; /* 给自己一个醒目的边框 */
+#player-top-area {
+    grid-row: 1 / 2;
+    grid-column: 1 / 4; /* 顶部玩家横跨所有列 */
+    justify-self: center; /* 在 grid 单元格内居中 */
+    width: 60%; /* 顶部玩家区域宽度 */
+    max-width: 500px;
 }
 
-.opponent-area .hand {
-    min-height: 70px; /* 对手牌区域高度 */
+#middle-area-wrapper { /* 新增一个 wrapper 来控制中间整体布局 */
+    grid-row: 2 / 3;
+    grid-column: 1 / 4; /* 中间区域横跨所有列 */
+    display: flex;
+    justify-content: space-between; /* 让左右玩家和中间底牌区分布 */
+    align-items: flex-start;
+    gap: 10px;
+    padding: 0 10px; /* 给中间区域一些左右内边距 */
+    width: 100%;
 }
+
+#player-left-area {
+    /* 定位在 #middle-area-wrapper 的左侧 */
+    flex-basis: 25%; /* 左侧玩家区域宽度 */
+    max-width: 200px;
+    align-self: center; /* 垂直居中于中间行 */
+}
+#player-left-area .hand {
+    flex-direction: column;
+    align-items: center;
+}
+
+#center-content-area { /* 新增：用于包裹底牌和游戏信息 */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+#landlord-cards-area {
+    background-color: rgba(0,0,0,0.3); /* 底牌区更深一点 */
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    width: auto; /* 根据内容自动调整宽度 */
+    min-width: 220px; /* 保证至少能放下三张牌 */
+}
+#landlord-cards-area h2 {
+    margin: 0 0 8px 0;
+    font-size: 1em;
+    color: #ffdd57; /* 金色标题 */
+}
+
+#game-info-area {
+    /* 定位在 #middle-area-wrapper 的右侧 */
+    /* 如果希望它在底牌下方，则移到 #center-content-area 内部 */
+    padding: 10px;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    width: auto;
+    min-width: 180px;
+}
+#game-info-area p {
+    margin: 8px 0;
+}
+
+#player-right-area { /* 4. 新增右下角玩家区域 (为了倒三角) */
+    /* 定位在 #middle-area-wrapper 的右侧 */
+    flex-basis: 25%;
+    max-width: 200px;
+    align-self: center; /* 垂直居中于中间行 */
+}
+#player-right-area .hand { /* 如果右侧玩家也垂直显示牌 */
+    flex-direction: column;
+    align-items: center;
+}
+
+
+#player-bottom-area {
+    grid-row: 3 / 4;
+    grid-column: 1 / 4; /* 底部玩家横跨所有列 */
+    justify-self: center; /* 在 grid 单元格内居中 */
+    width: 80%; /* 底部玩家区域宽度 */
+    max-width: 700px;
+    border: 2px solid #ffc107; /* 自己的边框用醒目的黄色 */
+}
+/* --- 玩家区域定位结束 --- */
+
 
 .player-info {
     font-weight: bold;
     margin-bottom: 8px;
-    color: white;
+    color: #f0f0f0; /* 玩家信息用浅灰色，与牌桌背景对比 */
     width: 100%;
     text-align: center;
+    padding: 3px;
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 4px;
 }
 .player-info .card-count {
     font-weight: normal;
@@ -67,111 +170,71 @@ main {
     margin-left: 10px;
 }
 
-
-#middle-area {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start; /* 顶部对齐 */
-    gap: 10px;
-}
-
-#player-left-area {
-    flex-basis: 20%; /* 左侧玩家区域宽度 */
-    align-self: stretch; /* 让其与中间区域同高 */
-}
-#player-left-area .hand {
-    flex-direction: column; /* 左侧玩家牌垂直排列 */
-    align-items: center;
-}
-
-
-#landlord-cards-area {
-    background-color: rgba(0,0,0,0.2);
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-    flex-grow: 1; /* 占据剩余空间 */
-}
-#landlord-cards-area h2 {
-    margin: 0 0 5px 0;
-    font-size: 0.9em;
-    color: white;
-}
-
-#game-info-area {
-    flex-basis: 25%; /* 右侧信息区域宽度 */
-    padding: 10px;
-    background-color: rgba(255,255,255,0.15);
-    border-radius: 5px;
-    text-align: center;
-    color: white;
-}
-#game-info-area p {
-    margin: 5px 0;
-}
-
-
 .hand {
     display: flex;
     flex-wrap: wrap;
-    gap: 5px; /* 牌之间的间距减小 */
-    min-height: 100px;
+    gap: 4px; /* 牌间距再小一点 */
+    min-height: 90px; /* 调整手牌区最小高度 */
     padding: 5px;
-    /* background-color: #e0e0e0; */ /* 移除背景色，让桌面背景透出来 */
     border-radius: 4px;
     justify-content: center;
+    align-items: flex-start; /* 牌从顶部开始对齐 */
 }
 
-.horizontal-hand .card { /* 用于顶部玩家，牌稍微重叠 */
-    margin-right: -50px; /* 根据牌宽调整重叠 */
-}
-.horizontal-hand .card:last-child {
-    margin-right: 0;
+/* 对手牌叠放效果 */
+.opponent-area .hand .card {
+    background-color: white; /* 1. 确保牌背有白色背景，不会透明 */
 }
 
-.vertical-hand .card { /* 用于左侧玩家，牌稍微重叠 */
-    margin-bottom: -80px; /* 根据牌高调整重叠 */
+#player-top-hand .card {
+    margin-right: -48px; /* 重叠更多 */
+    box-shadow: 1px 0px 2px rgba(0,0,0,0.4); /* 给叠放的牌一点阴影 */
 }
-.vertical-hand .card:last-child {
-    margin-bottom: 0;
+#player-top-hand .card:last-child { margin-right: 0; }
+
+#player-left-hand .card, #player-right-hand .card { /* 应用到左右两个玩家 */
+    margin-bottom: -70px; /* 重叠更多 */
+    box-shadow: 0px 1px 2px rgba(0,0,0,0.4);
 }
+#player-left-hand .card:last-child, #player-right-hand .card:last-child { margin-bottom: 0; }
 
 
 .card {
-    width: 60px; /* 牌的宽度减小 */
-    height: 85px; /* 牌的高度减小 */
-    background-size: contain;
+    width: 56px; /* 再微调牌的宽度 */
+    height: 80px; /* 再微调牌的高度 */
+    background-size: 100% 100%; /* 让背景图完全填充 */
     background-repeat: no-repeat;
     background-position: center;
-    border: 1px solid #aaa;
+    border: 1px solid #777; /* 边框颜色加深 */
     border-radius: 4px;
-    box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
     cursor: pointer;
     transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+    background-color: white; /* 1. 给所有牌一个白色背景，防止透明问题 */
+    image-rendering: -webkit-optimize-contrast; /* 尝试优化图片渲染 */
+    image-rendering: crisp-edges;
 }
 
 .card.selected {
-    transform: translateY(-10px); /* 选中时向上移动 */
-    box-shadow: 0px 5px 10px rgba(0,0,0,0.4);
-    border-color: #ffc107; /* 选中时边框高亮 */
-}
-
-.card:hover {
-    /* transform: scale(1.05); */ /* 悬停效果可选 */
+    transform: translateY(-12px) scale(1.05); /* 选中时更明显 */
+    box-shadow: 0px 6px 12px rgba(0,0,0,0.4);
+    border-color: #ffdd57; /* 选中时边框高亮 - 金黄色 */
 }
 
 .played-cards-area {
-    min-height: 90px; /* 出牌区域高度 */
-    width: 80%;
-    margin: 10px auto;
+    min-height: 85px;
+    width: 100%; /* 出牌区占满父容器宽度 */
+    max-width: 400px; /* 但可以限制最大宽度 */
+    margin: 8px auto;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: 4px;
+    padding: 5px;
+    /* background-color: rgba(0,0,0,0.1); */ /* 可选的出牌区背景 */
+    border-radius: 4px;
 }
-/* 也可以给 played-cards-area 一个背景或边框，如果需要 */
-
 
 .player-actions {
     margin-top: 10px;
@@ -183,38 +246,52 @@ main {
 button {
     background-color: #007bff;
     color: white;
-    border: none;
-    padding: 8px 12px; /* 按钮padding调整 */
+    border: 1px solid #0056b3; /* 给按钮一个边框 */
+    padding: 8px 15px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 14px; /* 按钮字体大小调整 */
+    font-size: 14px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, transform 0.1s;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.15);
 }
-button:hover {
+button:hover:not(:disabled) {
     background-color: #0056b3;
+    transform: translateY(-1px);
+}
+button:active:not(:disabled) {
+    transform: translateY(0px);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
 }
 button:disabled {
-    background-color: #ccc;
+    background-color: #aabbcc; /* 禁用按钮颜色更明显 */
+    border-color: #99aabb;
+    color: #e0e0e0;
     cursor: not-allowed;
+    box-shadow: none;
 }
-
 
 footer {
-    background-color: #343a40; /* 深色页脚 */
-    color: white;
+    background-color: #495057; /* 页脚颜色调整 */
+    color: #f0f0f0;
     text-align: center;
-    padding: 1em 0;
-    margin-top: auto; /* 确保在底部 */
+    padding: 0.8em 0; /* 略微减小footer高度 */
+    font-size: 0.9em;
 }
 
-#debug-info-area { /* 调试区域样式 */
-    border: 1px dashed #999;
-    font-size: 0.8em;
-    color: #555;
+#debug-info-area {
+    border: 1px dashed #aaa;
+    font-size: 0.85em;
+    color: #444;
+    background-color: #f9f9f9; /* 调试区背景 */
+    padding: 8px;
+    margin: 10px 20px; /* 给调试区一些外边距 */
+    border-radius: 4px;
 }
 #debug-info-area h4 {
     margin-top: 0;
+    margin-bottom: 5px;
+    color: #222;
 }
