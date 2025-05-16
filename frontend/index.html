@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>网页斗地主</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -12,65 +12,54 @@
     </header>
     <main>
         <div id="game-table">
-            <!-- 顶部玩家 (对手 - 上家) -->
-            <div id="player-top-area" class="player-area opponent-area">
+            <!-- 左上角玩家 (上家) -->
+            <div id="player-top-left-area" class="player-area opponent-area">
                 <div class="player-info">
-                    <span class="player-name">对手 (上家)</span>
-                    <span class="card-count" id="player-top-card-count">牌: 0</span>
-                    <span class="landlord-identity" id="player-top-landlord-identity"></span>
+                    <span class="player-name">上家</span>
+                    <span class="landlord-identity" id="player-top-left-landlord-identity"></span>
+                    <span class="card-count" id="player-top-left-card-count">牌: 0</span>
                 </div>
-                <div id="player-top-played" class="played-cards-area"></div>
-                <div id="player-top-hand" class="hand horizontal-hand"></div>
+                <div id="player-top-left-played" class="played-cards-area side-played"></div>
+                <div id="player-top-left-hand" class="hand horizontal-hand-compact"></div>
             </div>
 
-            <!-- 中间行：左右玩家 + 底牌/信息 -->
-            <div id="middle-row">
-                <div id="player-left-area" class="player-area opponent-area side-opponent">
-                    <div class="player-info">
-                        <span class="player-name">对手 (左家)</span>
-                        <span class="card-count" id="player-left-card-count">牌: 0</span>
-                        <span class="landlord-identity" id="player-left-landlord-identity"></span>
-                    </div>
-                    <div id="player-left-played" class="played-cards-area vertical-played"></div>
-                    <div id="player-left-hand" class="hand vertical-hand"></div>
+            <!-- 右上角玩家 (下家) -->
+            <div id="player-top-right-area" class="player-area opponent-area">
+                <div class="player-info">
+                    <span class="player-name">下家</span>
+                    <span class="landlord-identity" id="player-top-right-landlord-identity"></span>
+                    <span class="card-count" id="player-top-right-card-count">牌: 0</span>
                 </div>
+                <div id="player-top-right-played" class="played-cards-area side-played"></div>
+                <div id="player-top-right-hand" class="hand horizontal-hand-compact"></div>
+            </div>
 
-                <div id="center-table-elements">
-                    <div id="landlord-cards-area" class="card-area">
-                        <h2>底牌</h2>
-                        <div id="landlord-cards" class="hand"></div>
-                    </div>
-                    <div id="game-info-area">
-                        <p id="current-turn-indicator">轮到: 玩家</p>
-                        <p id="landlord-indicator">地主: 待定</p>
-                        <button id="start-game-button">开始新游戏 / 重新发牌</button>
-                    </div>
+            <!-- 中间区域: 底牌和游戏信息 -->
+            <div id="center-table-elements">
+                <div id="landlord-cards-area" class="card-area">
+                    <h2>底牌</h2>
+                    <div id="landlord-cards" class="hand"></div>
                 </div>
-
-                <div id="player-right-area" class="player-area opponent-area side-opponent">
-                    <div class="player-info">
-                        <span class="player-name">对手 (右家)</span>
-                        <span class="card-count" id="player-right-card-count">牌: 0</span>
-                        <span class="landlord-identity" id="player-right-landlord-identity"></span>
-                    </div>
-                    <div id="player-right-played" class="played-cards-area vertical-played"></div>
-                    <div id="player-right-hand" class="hand vertical-hand"></div>
+                <div id="game-info-area">
+                    <p id="current-turn-indicator">轮到: 玩家</p>
+                    <p id="landlord-indicator">地主: 待定</p>
+                    <button id="start-game-button">开始新游戏 / 重新发牌</button>
                 </div>
             </div>
 
-            <!-- 底部玩家 (自己) -->
-            <div id="player-bottom-area" class="player-area self-area">
-                <div class="player-info">
-                    <span class="player-name">你</span>
-                    <span class="card-count" id="player-bottom-card-count">牌: 0</span>
-                    <span class="landlord-identity" id="player-bottom-landlord-identity"></span>
-                </div>
-                <div id="player-bottom-played" class="played-cards-area"></div>
-                <div id="player-bottom-hand" class="hand"></div>
+            <!-- 左下角玩家 (自己) -->
+            <div id="player-bottom-left-area" class="player-area self-area">
+                 <div id="player-bottom-left-played" class="played-cards-area"></div>
+                <div id="player-bottom-left-hand" class="hand"></div>
                 <div class="player-actions">
                     <button id="play-selected-button" disabled>出牌</button>
                     <button id="pass-button" disabled>不要</button>
                     <button id="sort-hand-button">理牌</button>
+                </div>
+                <div class="player-info">
+                    <span class="player-name">你</span>
+                    <span class="landlord-identity" id="player-bottom-left-landlord-identity"></span>
+                    <span class="card-count" id="player-bottom-left-card-count">牌: 0</span>
                 </div>
             </div>
         </div>
