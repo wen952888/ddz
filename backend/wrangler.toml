@@ -1,0 +1,42 @@
+name = "doudizhu-backend" # 你的 Worker 名称，会影响 URL
+main = "src/index.ts"    # Worker 的入口文件 (如果是JS，改为 src/index.js)
+compatibility_date = "2024-03-10" # 使用你创建项目当天的日期或更新的日期
+
+# 部署时需要填写你的 Cloudflare Account ID
+# account_id = "YOUR_CLOUDFLARE_ACCOUNT_ID"
+
+# 如果使用 Durable Objects (可选)
+# [durable_objects]
+# bindings = [
+#   { name = "GAME_ROOM_DO", class_name = "GameRoom" }
+# ]
+
+# 如果使用 D1 数据库 (可选)
+# [[d1_databases]]
+# binding = "DB" # 在 Worker 代码中通过 env.DB 访问
+# database_name = "doudizhu-db"
+# database_id = "YOUR_D1_DATABASE_ID" # 从 Cloudflare Dashboard 创建 D1 数据库后获取
+
+# 如果使用 KV (可选)
+# [[kv_namespaces]]
+# binding = "GAME_KV" # 在 Worker 代码中通过 env.GAME_KV 访问
+# id = "YOUR_KV_NAMESPACE_ID"
+# preview_id = "YOUR_KV_PREVIEW_ID_FOR_LOCAL_DEV"
+
+# 如果你想在本地开发时模拟环境变量
+# [vars]
+# MY_VARIABLE = "some_value"
+
+# 针对特定环境的配置 (可选)
+# [env.production]
+# name = "doudizhu-backend-prod"
+# [env.production.vars]
+# ENVIRONMENT = "production"
+
+# [env.staging]
+# name = "doudizhu-backend-staging"
+# routes = [
+#   { pattern = "staging.yourgame.com/*", custom_domain = true }
+# ]
+# [env.staging.vars]
+# ENVIRONMENT = "staging"
