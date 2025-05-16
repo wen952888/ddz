@@ -1,78 +1,16 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>网页斗地主</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <h1>斗地主</h1>
-    </header>
-    <main>
-        <div id="game-table">
-            <!-- 左上角玩家 (上家) -->
-            <div id="player-top-left-area" class="player-area opponent-area">
-                <div class="player-info">
-                    <span class="player-name">上家</span>
-                    <span class="landlord-identity" id="player-top-left-landlord-identity"></span>
-                    <span class="card-count" id="player-top-left-card-count">牌: 0</span>
-                </div>
-                <div id="player-top-left-played" class="played-cards-area side-played"></div>
-                <div id="player-top-left-hand" class="hand horizontal-hand-compact"></div>
-            </div>
-
-            <!-- 右上角玩家 (下家) -->
-            <div id="player-top-right-area" class="player-area opponent-area">
-                <div class="player-info">
-                    <span class="player-name">下家</span>
-                    <span class="landlord-identity" id="player-top-right-landlord-identity"></span>
-                    <span class="card-count" id="player-top-right-card-count">牌: 0</span>
-                </div>
-                <div id="player-top-right-played" class="played-cards-area side-played"></div>
-                <div id="player-top-right-hand" class="hand horizontal-hand-compact"></div>
-            </div>
-
-            <!-- 中间区域: 底牌和游戏信息 -->
-            <div id="center-table-elements">
-                <div id="landlord-cards-area" class="card-area">
-                    <h2>底牌</h2>
-                    <div id="landlord-cards" class="hand"></div>
-                </div>
-                <div id="game-info-area">
-                    <p id="current-turn-indicator">轮到: 玩家</p>
-                    <p id="landlord-indicator">地主: 待定</p>
-                    <button id="start-game-button">开始新游戏 / 重新发牌</button>
-                </div>
-            </div>
-
-            <!-- 左下角玩家 (自己) -->
-            <div id="player-bottom-left-area" class="player-area self-area">
-                 <div id="player-bottom-left-played" class="played-cards-area"></div>
-                <div id="player-bottom-left-hand" class="hand"></div>
-                <div class="player-actions">
-                    <button id="play-selected-button" disabled>出牌</button>
-                    <button id="pass-button" disabled>不要</button>
-                    <button id="sort-hand-button">理牌</button>
-                </div>
-                <div class="player-info">
-                    <span class="player-name">你</span>
-                    <span class="landlord-identity" id="player-bottom-left-landlord-identity"></span>
-                    <span class="card-count" id="player-bottom-left-card-count">牌: 0</span>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <div id="debug-info-area">
-        <h4>调试信息:</h4>
-        <p id="backend-message">等待后端消息...</p>
+<!-- frontend/index.html -->
+<header>
+    <h1>斗地主</h1>
+    <!-- +++++ 用户认证 UI +++++ -->
+    <div id="auth-area">
+        <span id="user-greeting" style="display:none;">你好, <span id="username-display"></span>!</span>
+        <input type="text" id="username-input" placeholder="用户名" style="display:none;">
+        <input type="password" id="password-input" placeholder="密码" style="display:none;">
+        <button id="login-button">登录</button>
+        <button id="register-button">注册</button>
+        <button id="logout-button" style="display:none;">登出</button>
+        <p id="auth-message" style="font-size:0.8em; color:lightcoral;"></p>
     </div>
-
-    <footer>
-        <p>游戏开发中... (后端连接状态)</p>
-    </footer>
-    <script src="script.js"></script>
-</body>
-</html>
+    <!-- +++++++++++++++++++++++ -->
+</header>
+<!-- ... (main 内容保持不变) ... -->
