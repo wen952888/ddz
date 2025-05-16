@@ -3,7 +3,7 @@ main = "src/index.ts"    # Worker 的入口文件 (如果是JS，改为 src/inde
 compatibility_date = "2024-03-10" # 使用你创建项目当天的日期或更新的日期
 
 # 部署时需要填写你的 Cloudflare Account ID
-# account_id = "YOUR_CLOUDFLARE_ACCOUNT_ID"
+# account_id = "34706d9bda5c5e6fa6cbea1a678fae46"
 
 # 如果使用 Durable Objects (可选)
 # [durable_objects]
