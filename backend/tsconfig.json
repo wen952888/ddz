@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": ["esnext", "webworker"],
+    "jsx": "react-jsx", // 如果你计划在Worker中使用JSX (例如Hono JSX)
+    "esModuleInterop": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "outDir": "./dist", // Wrangler v3 通常不需要显式 outDir，它会处理
+    "types": ["@cloudflare/workers-types"]
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}
