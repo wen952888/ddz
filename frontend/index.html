@@ -8,29 +8,76 @@
 </head>
 <body>
     <header>
-        <h1>斗地主 - 牌面识别</h1>
+        <h1>斗地主</h1>
     </header>
     <main>
-        <div id="game-area">
-            <div id="player-hand-area" class="card-area">
-                <h2>你的手牌</h2>
-                <div id="player-hand" class="hand">
-                    <!-- 手牌将由JS动态生成 -->
+        <div id="game-table">
+            <!-- 顶部玩家 (对手2) -->
+            <div id="player-top-area" class="player-area opponent-area">
+                <div class="player-info">
+                    <span>对手 (上家)</span>
+                    <span class="card-count" id="player-top-card-count">牌: 0</span>
+                </div>
+                <div id="player-top-hand" class="hand horizontal-hand">
+                    <!-- 对手牌背 -->
+                </div>
+                <div id="player-top-played" class="played-cards-area"></div>
+            </div>
+
+            <div id="middle-area">
+                <!-- 左侧玩家 (对手1) -->
+                <div id="player-left-area" class="player-area opponent-area">
+                    <div class="player-info">
+                        <span>对手 (下家)</span>
+                        <span class="card-count" id="player-left-card-count">牌: 0</span>
+                    </div>
+                    <div id="player-left-hand" class="hand vertical-hand">
+                        <!-- 对手牌背 -->
+                    </div>
+                    <div id="player-left-played" class="played-cards-area"></div>
+                </div>
+
+                <!-- 底牌区域 -->
+                <div id="landlord-cards-area" class="card-area">
+                    <h2>底牌</h2>
+                    <div id="landlord-cards" class="hand">
+                        <!-- 底牌将由JS动态生成 -->
+                    </div>
+                </div>
+
+                <!-- 右侧占位 (或者可以放游戏信息/按钮) -->
+                <div id="game-info-area">
+                    <p id="current-turn-indicator">轮到: 玩家</p>
+                    <p id="landlord-indicator">地主: 待定</p>
+                    <button id="start-game-button">开始新游戏 / 重新发牌</button>
                 </div>
             </div>
 
-            <div id="deck-area" class="card-area">
-                <h2>牌堆 (示例)</h2>
-                <div id="deck-display" class="hand">
-                    <!-- 牌堆示例将由JS动态生成 -->
+            <!-- 底部玩家 (自己) -->
+            <div id="player-bottom-area" class="player-area self-area">
+                <div id="player-bottom-played" class="played-cards-area"></div>
+                <div id="player-bottom-hand" class="hand">
+                    <!-- 自己的手牌 -->
+                </div>
+                <div class="player-actions">
+                    <button id="play-selected-button" disabled>出牌</button>
+                    <button id="pass-button" disabled>不要</button>
+                     <button id="sort-hand-button">理牌</button>
+                </div>
+                <div class="player-info">
+                    <span>你</span>
+                    <span class="card-count" id="player-bottom-card-count">牌: 0</span>
                 </div>
             </div>
         </div>
-        <button id="deal-button">发一副牌 (示例)</button>
-        <button id="show-all-cards-button">显示所有牌型</button>
+
+        <div id="debug-info-area" style="margin-top: 20px; padding: 10px; background: #eee;">
+            <h4>调试信息:</h4>
+            <p id="backend-message">等待后端消息...</p>
+        </div>
     </main>
     <footer>
-        <p>扑克牌图片稍后上传到 `frontend/assets/cards/`</p>
+        <p>游戏开发中... (后端连接状态)</p>
     </footer>
     <script src="script.js"></script>
 </body>
